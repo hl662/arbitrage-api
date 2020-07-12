@@ -1,5 +1,5 @@
 // https://www.cs.cornell.edu/courses/cs211/2006fa/Lectures/L22-More%20Graphs/Digraph.java
-package utils;
+package utils.graph;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -87,6 +87,7 @@ public class DiGraph {
     testGraph.add(rand);
     testGraph.add(eur);
 
+    // Test
     testGraph.addEdge(eur, usd, 1.2234);
     System.out.print(testGraph);
   }
