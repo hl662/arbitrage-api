@@ -5,13 +5,17 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import javax.net.ssl.HttpsURLConnection;
-public class httpget {
+public class Httpget {
 
-    public static final String exchangeRateURL = "https://api.exchangeratesapi.io/latest";
-    
-    // TODO: Create file called json-parser (unless java comes builtin with one)
-    public static void sendGET() throws IOException {
-        URL getURL = new URL(exchangeRateURL);
+    // TODO: research java.org.JSONObject;
+    public static final String baseExchangeRateURL = "https://api.exchangeratesapi.io/latest"; // By default, gets the base EUR.
+    // TODO: Add a "?base={currentCurrency}" and do a for each in the currencies loop
+    public static final String[] currencies = {"EUR","CAD","GBP","JPY","AUD","USD","HKD","ISK","PHP","DKK","HUF","CZK","AUD","RON","SEK"};
+    /**
+     *  Sends a HTTP Request GET to fetch the latest currency rates in string formatted JSON. 
+     */
+    public static String sendGET(String url) throws IOException {
+        URL getURL = new URL(url);
         HttpsURLConnection con = (HttpsURLConnection) getURL.openConnection();
         con.setRequestMethod("GET");
         int responseCode = con.getResponseCode();
@@ -23,14 +27,16 @@ public class httpget {
                 response.append(inputLine);
             }
             buffer.close();
-            System.out.println(response);
+            return response.toString();
         } else {
-            System.out.println(con.getResponseCode());
-            System.out.println(con.getResponseMessage());
+            StringBuffer error = new StringBuffer();
+            error.append(con.getResponseCode() + ": ");
+            error.append(con.getResponseMessage() + "\n");
+            return error.toString();
         }
     }
 
     public static void main(String[] args) throws IOException{
-        httpget.sendGET();
+        System.out.println(Httpget.sendGET(Httpget.baseExchangeRateURL));
     }
 }
