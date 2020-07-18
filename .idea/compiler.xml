@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="arbitrage-api" target="1.5" />
+      <module name="arbitrage-api" target="1.11" />
     </bytecodeTargetLevel>
   </component>
 </project>
