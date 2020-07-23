@@ -4,14 +4,16 @@ import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.ArrayList;
 import javax.net.ssl.HttpsURLConnection;
 import org.json.JSONObject;
+import utils.Currency;
+import utils.parser.Parser;
+
 //import org.json.JSONArray;
 public class HttpGet {
 
-    // TODO: research java.org.JSONObject;
     public static final String baseExchangeRateURL = "https://api.exchangeratesapi.io/latest"; // By default, gets the base EUR.
-    // TODO: Add a "?base={currentCurrency}" and do a for each in the currencies loop
     public static final String[] currencies = {"HRK", "CHF", "MXN", "ZAR", "INR", "THB", "CNY", "AUD", "ILS", "KRW", "JPY", "PLN", "GBP", "IDR", "HUF", "PHP", "TRY", "RUB", "HKD", "ISK", "DKK", "CAD", "USD", "MYR", "BGN", "NOK", "RON", "SGD", "CZK", "SEK", "NZD", "BRL", "GBP"};
     /**
      *  Sends a HTTP Request GET to fetch the latest currency rates in string formatted JSON.
@@ -39,18 +41,16 @@ public class HttpGet {
         }
     }
 
-    public static void getAllLatestCurrencies() throws IOException {
-        for (String currency : currencies) {
+    public static ArrayList<Currency> fetchAllLatestCurrencies() throws IOException {
+        ArrayList<Currency> result = new ArrayList<Currency>();
+        for (String currency : HttpGet.currencies) {
             String url = HttpGet.baseExchangeRateURL.concat(String.format("?base=%s", currency));
-            System.out.println(HttpGet.fetchCurrency(url));
+            result.add(Parser.parseJSONCurrency(fetchCurrency(url)));
         }
+        return result;
     }
 
     public static void main(String[] args) throws IOException{
-//        String jsonString = Httpget.fetchLatestRates(Httpget.baseExchangeRateURL);
-//        JSONObject jsonObj = Httpget.parseJSONData(jsonString);
-//        JSONObject rates = (JSONObject) jsonObj.get("rates");
-//        System.out.println(rates.keySet());
-        HttpGet.getAllLatestCurrencies();
+        System.out.println(HttpGet.fetchAllLatestCurrencies());
     }
 }
