@@ -1,6 +1,7 @@
 // https://www.cs.cornell.edu/courses/cs211/2006fa/Lectures/L22-More%20Graphs/Digraph.java
 package utils.graph;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,43 +9,10 @@ import java.util.Map;
 
 // Initialize a weight between two vertices as infinity first, then assign the
 // weight accordingly
-class Vertex {
-  // int weight;
-  String currency;
-
-  // Constructor
-  public Vertex(String newCurrency) {
-    this.currency = newCurrency;
-  }
-
-  @Override
-  public String toString() {
-    return this.currency;
-  }
-}
-
-class Edge {
-  Vertex source;
-  Vertex dest;
-  double weight;
-
-  // Constructor
-  public Edge(Vertex source, Vertex dest, double weight) {
-    this.source = source;
-    this.dest = dest;
-    this.weight = weight;
-  }
-
-  @Override
-  public String toString() {
-    return String.format("Source: %s, Dest: %s. Exchange Rate: %.6f", this.source, this.dest, this.weight);
-  }
-}
-
-// Credits to Cornells' CS211 DiGraph Implementation, where I used it for
-// reference.
+// Credits to Cornells' CS211 DiGraph Implementation, which I used for reference.
 public class DiGraph {
   // We want the weighted edge between two vertices. Use an adjacency list.
+  // TODO: We don't need vertex, we can just use String. Same for Edge, Go inside of Edge class and set source and dest to be of type String instead.
   private Map<Vertex, List<Edge>> neighbors = new HashMap<Vertex, List<Edge>>();
 
   @Override
