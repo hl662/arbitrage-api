@@ -13,6 +13,10 @@ public class Vertex {
     this.minimumWeight = 99.0; // This will be regarded as infinity.
   }
 
+  public String getCurrency() {
+    return currency;
+  }
+
   public double getMinimumWeight() {
     return this.minimumWeight;
   }

@@ -9,7 +9,6 @@ import java.util.*;
 // Credits to Cornells' CS211 DiGraph Implementation, which I used for reference.
 public class DiGraph {
   // We want the weighted edge between two vertices. Use an adjacency list.
-  // TODO: We don't need vertex, we can just use String. Same for Edge, Go inside of Edge class and set source and dest to be of type String instead.
   public Map<Vertex, List<Edge>> neighbors = new HashMap<Vertex, List<Edge>>();
   private HashSet<String> baseCurrencies = new HashSet<String>();
   @Override
@@ -27,7 +26,7 @@ public class DiGraph {
   }
 
   public void addVertex(Vertex newVertex) {
-    if (neighbors.containsKey(newVertex)) { // Or we could implement our own check if neighbors contains the Vertex.currency.
+    if (neighbors.containsKey(newVertex)) {
       return;
     }
     neighbors.put(newVertex, new ArrayList<Edge>());
