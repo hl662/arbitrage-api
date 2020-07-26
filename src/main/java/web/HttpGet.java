@@ -6,11 +6,9 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
 import javax.net.ssl.HttpsURLConnection;
-import org.json.JSONObject;
 import utils.Currency;
 import utils.parser.Parser;
 
-//import org.json.JSONArray;
 public class HttpGet {
 
     public static final String baseExchangeRateURL = "https://api.exchangeratesapi.io/latest"; // By default, gets the base EUR.

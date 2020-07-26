@@ -24,6 +24,10 @@ public class BellmanFord {
     this.initializeGraph(currencies);
   }
 
+  /**
+   * For each edge in the graph, converts its edge weight to -log(weight)
+   * @param graph
+   */
   public static void preProcessGraph(DiGraph graph) {
     for (Vertex base : graph.neighbors.keySet()) {
       for (Edge edge : graph.neighbors.get(base)) {
@@ -32,21 +36,22 @@ public class BellmanFord {
     }
   }
 
+  /**
+   * Checks if the edge can be relaxed.
+   * @param edge
+   * @return
+   */
   public static boolean canRelax(Edge edge) {
       return edge.getDest().getMinimumWeight() > edge.getSource().getMinimumWeight() + edge.getWeight();
   }
-  // TODO: Implement checkNegativeCycle()
   public static void bellmanFordAlgorithm() throws IOException {
     // First, turn all edge weights into log(weight), when we want to get the result, we will get the exponential form of log(weight)
-    // When we get the shortest path, aka a path that is negative, then in reality, when we exponentiate it, we will get the positive value.
-
-    // TODO: Explain on README that this intends to find arbitrage opportunities on the foreign exchange market (FOREX)
-    HashMap<Vertex, Vertex> predecessor = new HashMap<Vertex, Vertex>();
     BellmanFord test = new BellmanFord(HttpGet.fetchAllLatestCurrencies());
-
     BellmanFord.preProcessGraph(test.graph);
 
-    int numOfVertices = test.graph.neighbors.keySet().size();
+    // We use a predecessor hashmap to construct the negative weight cycle later on (if any).
+    HashMap<Vertex, Vertex> predecessor = new HashMap<Vertex, Vertex>();
+
     // Let's let source vertex to be "USD", we just need one vertex to be 0.
     for (Vertex v : test.graph.neighbors.keySet()) {
       if (v.getCurrency().equals("USD")) {
@@ -55,6 +60,7 @@ public class BellmanFord {
     }
 
     // We relax all edges v-1 times
+    int numOfVertices = test.graph.neighbors.keySet().size();
     for (int i = 0; i < numOfVertices - 1; i++) {
       for (Vertex v : test.graph.neighbors.keySet()) {
         for (Edge edge : test.graph.neighbors.get(v)) {
@@ -69,12 +75,11 @@ public class BellmanFord {
         }
       }
     }
-
+    System.out.println("Display any arbitrage opportunities (if any) :");
     // Now we check if any edges can be further relaxed, then it means we have a negative cycle.
     for (Vertex v : test.graph.neighbors.keySet()) {
       for (Edge edge : test.graph.neighbors.get(v)) {
         if (BellmanFord.canRelax(edge)) {
-          System.out.println("ho");
           StringBuilder printCycle = new StringBuilder();
           // Go through predecessor list of the edge's source.
           printCycle.insert(0, String.format(" <<< %s <<< %s", edge.getSource(), edge.getDest()));
@@ -91,6 +96,7 @@ public class BellmanFord {
         }
       }
     }
+    System.out.println("Done.");
   }
 
   public static void main(String[] args) throws IOException {
