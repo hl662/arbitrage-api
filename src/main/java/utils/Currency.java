@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 public class Currency {
-    String base;
-    HashMap<String, Double> rates; // Use this to construct the edge.
+    public String base;
+    public HashMap<String, Double> rates; // Use this to construct the edge.
 
     @Override
     public String toString() {
